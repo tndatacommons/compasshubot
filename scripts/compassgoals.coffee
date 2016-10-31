@@ -26,6 +26,9 @@ module.exports = (robot) ->
         output = output.join("\n")
         res.send "#{output}"
 
+  # Answer queries for the compass app
+  robot.respond /(.*) app(.*)/i, (res) ->
+    res.send "You can get the Compass app from http://getcompass.org/"
 
   # ---- the rest of these are just for fun / experimentation -----------------
 
