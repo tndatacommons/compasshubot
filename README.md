@@ -18,7 +18,13 @@ You can test your hubot by running the following, however some plugins will not
 behave as expected unless the [environment variables](#configuration) they rely
 upon have been set.
 
-You can start Compass locally by running:
+But first,
+
+1. Fork this repo.
+2. `cd compasshubot`
+3. Run `npm install`
+
+Now, you can start Compass locally by running:
 
     % HUBOT_SLACK_TOKEN=<YOUR SLACK TOKEN HERE> ./bin/hubot --adapter slack
 
