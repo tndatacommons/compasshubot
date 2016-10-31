@@ -8,7 +8,7 @@
 
 module.exports = (robot) ->
 
-  # Goal searches.
+  # Goal searches
   # -------------
   robot.hear /(howto|How do I|How to|Where is|Where can|Where do|I wish) (.*)/i, (res) ->
     query = res.match[2].replace(/\ /g, '+')
@@ -16,7 +16,7 @@ module.exports = (robot) ->
     robot.http(query).get() (err, resp, body) ->
       data = JSON.parse body
       if data.count == 0
-        res.emote("/shrug")
+        res.send("¯\\_(ツ)_/¯")
       else
         output = [":sparkles: Found #{data.count} items. Here are just a few! :sparkles:"]
         results = data.results[0..2]
@@ -26,7 +26,13 @@ module.exports = (robot) ->
         output = output.join("\n")
         res.send "#{output}"
 
+
   # ---- the rest of these are just for fun / experimentation -----------------
+
+  # Be encouraging
+  robot.hear /(:disappointed:|:(|:-(|:-\/|:cry:|:worried:|:angry:|:scream:|:fearful:)/i, (res) ->
+    res.send "Ahh. cheer up. Things will get better :heart:"
+
   # Chime in when anyone starts a sentence with "obviously"
   robot.hear /obviously .*/i, (res) ->
     replies = [
