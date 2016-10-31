@@ -30,7 +30,7 @@ module.exports = (robot) ->
   # ---- the rest of these are just for fun / experimentation -----------------
 
   # Be encouraging
-  robot.hear /(:disappointed:|:(|:-(|:-\/|:cry:|:worried:|:angry:|:scream:|:fearful:)/i, (res) ->
+  robot.hear /(:disappointed:|:cry:|:worried:|:angry:|:scream:|:fearful:)/i, (res) ->
     res.send "Ahh. cheer up. Things will get better :heart:"
 
   # Chime in when anyone starts a sentence with "obviously"
