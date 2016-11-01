@@ -113,15 +113,3 @@ module.exports = (robot) ->
   robot.respond /who am I?/i, (res) ->
     user = res.message.user
     res.send user.id + " -> " + user.name + " @ " + user.room
-
-  # Say something when somone enters the channel.
-  enterReplies = [
-    "Hi! I'm the compass bot.",
-    'Howdy. Ask me queestions or say "compass help" to learn more.',
-  ]
-  leaveReplies = ['Later!', 'Goodbye', 'Adios']
-
-  robot.enter (res) ->
-    res.send res.random enterReplies
-  robot.leave (res) ->
-    res.send res.random leaveReplies
