@@ -90,7 +90,7 @@ module.exports = (robot) ->
     user = res.message.user.room + "-" + res.message.user.id
     key = "namefor-" + user
     robot.brain.set(key, name)
-    res.send "Gotcha! I'll remeber that."
+    res.send "Gotcha! I'll remember that."
 
   # Greetings, mainly to test whether the name was set correctly
   robot.respond /(hi there|hello|howdy|howdies)/i, (res) ->
