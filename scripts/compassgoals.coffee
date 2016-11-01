@@ -76,6 +76,44 @@ module.exports = (robot) ->
   robot.respond /lulz/i, (res) ->
     res.send res.random lulz
 
+  # Rrespond to beaming commands
+  robot.respond /beam (me|him|her|us|them) up/i, (res) ->
+    res.send "Aye aye, captain!"
+
+  # Respond to this existential question someone may have
+  robot.respond /why did the chicken cross the (Möbius|Moebius|Mobius) (band|strip)\?/i, (res) ->
+    res.send "To get to the same side!"
+
+  # Let compass remember my name
+  robot.respond /my name is (.*)/i, (res) ->
+    name = res.match[1]
+    user = res.message.user.room + "-" + res.message.user.id
+    key = "namefor-" + user
+    robot.brain.set(key, name)
+    if name is "Ismael"
+      res.send "_Call me Ismael_ :stuck_out_tongue_winking_eye:"
+    run = () ->
+      res.send "Gotcha! I'll remember that."
+    setTimeout(run, 500)
+
+
+  # Greetings, mainly to test whether the name was set correctly
+  robot.respond /(hi|hi there|hello|howdy|howdies)/i, (res) ->
+    key = "namefor-" + res.message.user.room + "-" + res.message.user.id
+    name = robot.brain.get(key)
+    if name is null
+      name = res.message.user.name
+    res.send "Hello, " + name + "!"
+
+  # Something awesome just happened ;P
+  robot.respond /like a boss/i, (res) ->
+    res.send ":sunglasses:"
+
+  # Id of the user, username, and id of the room
+  robot.respond /who am I?/i, (res) ->
+    user = res.message.user
+    res.send user.id + " -> " + user.name + " @ " + user.room
+
   # Say something when somone enters the channel.
   enterReplies = [
     "Hi! I'm the compass bot.",
