@@ -1,3 +1,6 @@
+# Initialization
+#   Anything involving setting initial values, managing user lists, or
+#   setting names and mods.
 
 module.exports = (robot) ->
 
@@ -11,6 +14,31 @@ module.exports = (robot) ->
   robot.respond /count people/i, (res) ->
     people = robot.brain.get(res.message.user.room + "-people")
     res.send people.length + " people"
+
+  # Let compass remember my name
+  robot.respond /my name is (.*)/i, (res) ->
+    name = res.match[1]
+    user = res.message.user.room + "-" + res.message.user.id
+    key = "namefor-" + user
+    robot.brain.set(key, name)
+    if name is "Ismael"
+      res.send "_Call me Ismael_ :stuck_out_tongue_winking_eye:"
+    run = () ->
+      res.send "Gotcha! I'll remember that."
+    setTimeout(run, 500)
+
+  # Greetings, mainly to test whether the name was set correctly
+  robot.respond /(hi|hi there|hello|howdy|howdies)/i, (res) ->
+    key = "namefor-" + res.message.user.room + "-" + res.message.user.id
+    name = robot.brain.get(key)
+    if name is null
+      name = res.message.user.name
+    res.send "Hello, " + name + "!"
+
+  # Id of the user, username, and id of the room
+  robot.respond /who am I?/i, (res) ->
+    user = res.message.user
+    res.send user.id + " -> " + user.name + " @ " + user.room
 
   # Say something when somone enters the channel.
   enterReplies = [
