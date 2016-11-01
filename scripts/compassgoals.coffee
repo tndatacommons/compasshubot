@@ -90,10 +90,16 @@ module.exports = (robot) ->
     user = res.message.user.room + "-" + res.message.user.id
     key = "namefor-" + user
     robot.brain.set(key, name)
-    res.send "Gotcha! I'll remember that."
+    messages = []
+    if name is "Ismael"
+      res.send "_Call me Ismael_ :stuck_out_tongue_winking_eye:"
+    run = () ->
+      res.send "Gotcha! I'll remember that."
+    setTimeout(run, 500)
+
 
   # Greetings, mainly to test whether the name was set correctly
-  robot.respond /(hi there|hello|howdy|howdies)/i, (res) ->
+  robot.respond /(hi|hi there|hello|howdy|howdies)/i, (res) ->
     key = "namefor-" + res.message.user.room + "-" + res.message.user.id
     name = robot.brain.get(key)
     if name is null
