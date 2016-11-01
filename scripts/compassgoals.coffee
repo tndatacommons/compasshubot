@@ -90,7 +90,6 @@ module.exports = (robot) ->
     user = res.message.user.room + "-" + res.message.user.id
     key = "namefor-" + user
     robot.brain.set(key, name)
-    messages = []
     if name is "Ismael"
       res.send "_Call me Ismael_ :stuck_out_tongue_winking_eye:"
     run = () ->
