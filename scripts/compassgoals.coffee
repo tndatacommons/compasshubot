@@ -85,7 +85,7 @@ module.exports = (robot) ->
     res.send "To get to the same side!"
 
   # Let compass remember my name
-  robot.respond /my name is (.*)/, (res) ->
+  robot.respond /my name is (.*)/i, (res) ->
     name = res.match[1]
     user = res.message.user.room + "-" + res.message.user.id
     key = "namefor-" + user
