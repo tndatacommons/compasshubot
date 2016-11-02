@@ -6,10 +6,39 @@ module.exports = (robot) ->
 
   robot.hear /I('m| am) the mod/i, (res) ->
     user = res.message.user
-    mod = robot.brain.get(user.room + "-mod")
-    if mod is null
-      robot.brain.set(user.room + "-mod", user.id)
+    mods = robot.brain.get(user.room + "-mods")
+    if mods is null
+      mods = []
+    if mods.length == 0
+      mods.push(user.name)
+      robot.brain.set(user.room + "-mods", mods)
       res.send "Okay, gotcha!"
+
+  robot.respond /grant (.*) mod privileges/i, (res) ->
+      user = res.message.user
+      mods = robot.brain.get(user.room + "-mods")
+      if mods is null
+        mods = []
+      if mods.length == 0
+        mods.push(res.match[1])
+        robot.brain.set(user.room + "-mods", mods)
+        res.send "Okay, gotcha!"
+      else
+        if user.name in mods
+          mods.push(res.match[1])
+          robot.brain.set(user.room + "-mods", mods)
+          res.send "Okay, gotcha!"
+
+  robot.respond /Who(\'s| is| are) the mo(d|ds)/i, (res) ->
+    user = res.message.user
+    mods = robot.brain.get(user.room + "-mods")
+    if mods is null || mods.length == 0
+      res.send "We have no mods"
+    else
+      output = []
+      for mod in mods
+        output.push(mod)
+      res.send output.join("\n")
 
   robot.respond /count people/i, (res) ->
     people = robot.brain.get(res.message.user.room + "-people")

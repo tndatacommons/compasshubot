@@ -58,3 +58,12 @@ module.exports = (robot) ->
   # Something awesome just happened ;P
   robot.respond /like a boss/i, (res) ->
     res.send ":sunglasses:"
+
+  robot.respond /crack a joke/i, (res) ->
+    url = "https://app.tndata.org/api/rewards/?format=json&random=1&type=joke"
+    robot.http(url).get() (err, resp, body) ->
+      if !err
+        data = JSON.parse body
+        res.send data.results[0].message
+      else
+        res.send "Sorry, I don't have anything in store for now..."
