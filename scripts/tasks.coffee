@@ -20,3 +20,12 @@ module.exports = (robot) ->
       for task in tasks
         output.push("*#{task}*")
       res.send output.join("\n")
+
+  robot.respond /I did (.*)/, (res) ->
+    tasks = robot.brain.get(res.message.user.name + "-tasks")
+    if tasks isnt null
+      index = tasks.indexOf(res.match[1])
+      if index isnt -1
+        tasks.splice(index, 1)
+        robot.brain.set(res.message.user.name + "-tasks", tasks)
+        res.send "Okay, gotcha!"
