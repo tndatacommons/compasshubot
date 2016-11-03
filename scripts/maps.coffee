@@ -23,17 +23,20 @@ module.exports = (robot) ->
   robot.hear /(.*) from (.*) to (.*)/i, (res) ->
     source = res.match[2].replace(/\ /g, '+')
     destination = res.match[3].replace(/\ /g, '+')
+    console.log "MATCHED -- #{source} -> #{destination}"
     url = "https://www.google.com/maps/dir/#{source}/#{destination}/"
     res.send "Perhaps this Google map will help:\n #{url}"
 
   # Where is...?
-  robot.respond /(.* ?)where (i can find|can i find|is the|is a|is an|is|are the|are) (.*)/i, (res) ->
+  robot.hear /(.* ?)where (is the|is a|is an|is|are the|are) (.*)/i, (res) ->
     query = res.match[3].replace(/\ /g, '+')
+    console.log "MATCHED -- #{query}"
     url = "https://www.google.com/maps/search/#{query}/"
     res.send "Perhaps this Google map will help:\n #{url}"
 
   # Find...
-  robot.respond /(.* ?)find (.*)/i, (res) ->
+  robot.hear /(.* ?)find (.*)/i, (res) ->
     query = res.match[2].replace(/\ /g, '+')
+    console.log "MATCHED -- #{query}"
     url = "https://www.google.com/maps/search/#{query}/"
     res.send "Perhaps this Google map will help:\n #{url}"
