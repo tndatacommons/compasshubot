@@ -9,6 +9,7 @@ module.exports = (robot) ->
   # -------------
   robot.hear /(howto|How do|How to|How do I|I wish) (.*)/i, (res) ->
     query = res.match[2].replace(/\ /g, '+')
+    console.log "GOALS: query = #{query}"
     query = "https://app.tndata.org/api/search/?format=json&q=#{query}"
     robot.http(query).get() (err, resp, body) ->
       data = JSON.parse body
