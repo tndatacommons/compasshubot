@@ -7,8 +7,9 @@ module.exports = (robot) ->
   # -------------
   # Goal searches
   # -------------
-  robot.hear /(howto|How do I|How to|Where is|Where can|Where do|I wish) (.*)/i, (res) ->
+  robot.hear /(howto|How do|How to|How do I|I wish) (.*)/i, (res) ->
     query = res.match[2].replace(/\ /g, '+')
+    console.log "GOALS: query = #{query}"
     query = "https://app.tndata.org/api/search/?format=json&q=#{query}"
     robot.http(query).get() (err, resp, body) ->
       data = JSON.parse body
