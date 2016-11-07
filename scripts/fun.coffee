@@ -56,7 +56,7 @@ module.exports = (robot) ->
     res.send "To get to the same side!"
 
   # Something awesome just happened ;P
-  robot.respond /like a boss/i, (res) ->
+  robot.hear /(.*)like a boss(.*)/i, (res) ->
     res.send ":sunglasses:"
 
   robot.respond /crack a joke/i, (res) ->
