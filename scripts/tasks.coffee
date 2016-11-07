@@ -1,3 +1,8 @@
+# Commands:
+#   compass add <task> to <user> - Adds a task to a user
+#   compass add <task> - Adds a taks to yourself
+#   compass what are my tasks? - Lists your tasks
+#   compass I did <task> - Marks a task of yours done
 
 module.exports = (robot) ->
   robot.respond /add (.*) to (.*)/i, (res) ->
@@ -16,6 +21,8 @@ module.exports = (robot) ->
     if task.length != 0
       user = res.message.user
       tasks = robot.brain.get("#{user.room}-#{user.name}-tasks")
+      if tasks is null
+        tasks = []
       tasks.push(task)
       robot.brain.set("#{user.room}-#{user.name}-tasks", tasks)
       res.send "Done!"

@@ -1,6 +1,15 @@
 # Initialization
 #   Anything involving setting initial values, managing user lists, or
 #   setting names and mods.
+#
+# Commands:
+#   I am the mod - You self procclaimed as the mod of this room. Only works if job is vacant.
+#   grant <user> mod privileges - If you are a mod you can promote other people!
+#   Who is the mod? - Lists the mods
+#   My name is <name> - I'll remember that
+#   Hello - If you want to greet compass
+
+token = process.env.HUBOT_SLACK_TOKEN
 
 module.exports = (robot) ->
 
@@ -29,7 +38,7 @@ module.exports = (robot) ->
           robot.brain.set(user.room + "-mods", mods)
           res.send "Okay, gotcha!"
 
-  robot.respond /Who(\'s| is| are) the mo(d|ds)/i, (res) ->
+  robot.respond /Who(\'s| is| are) the mo(d|ds)?/i, (res) ->
     user = res.message.user
     mods = robot.brain.get(user.room + "-mods")
     if mods is null || mods.length == 0
@@ -68,6 +77,12 @@ module.exports = (robot) ->
   robot.respond /who am I?/i, (res) ->
     user = res.message.user
     res.send user.id + " -> " + user.name + " @ " + user.room
+
+  robot.respond /test/i, (res) ->
+    console.log("Token", token)
+    query = "https://slack.com/api/chat.postMessage?token=#{token}&channel=@compass&text=Test"
+    robot.http(query).post() (err, resp, body) ->
+      console.log("INIT", body)
 
   # Say something when somone enters the channel.
   enterReplies = [
